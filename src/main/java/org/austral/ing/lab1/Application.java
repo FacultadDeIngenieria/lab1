@@ -13,7 +13,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Application {
@@ -125,6 +127,20 @@ public class Application {
             entityManager.close();
 
             return gson.toJson(user);
+        });
+
+        Spark.get("/users1", "application/json", (req, resp) -> {
+
+            resp.type("application/json");
+            resp.status(201);
+
+            final Gson gson = new Gson();
+
+            User u1 = User.create("ja1").lastName("pee").build();
+            User u2 = User.create("ja2").lastName("pee").build();
+
+            List<User> users = Arrays.asList(u1, u2);
+            return gson.toJson(users);
         });
     }
 
