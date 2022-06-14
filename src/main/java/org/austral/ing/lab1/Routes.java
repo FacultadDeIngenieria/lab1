@@ -63,7 +63,10 @@ private HCSystem system;
                 return render(model, Register_Template_Patient);
             }
         });
-        get(RegisterMedic_Route, (request, response) -> render(Register_Template_Medic));
+        get(RegisterMedic_Route, (request, response) -> {
+            response.redirect("/registerMedic.html");
+            return halt();
+        });
         post(RegisterMedic_Route, (request, response) -> {
             final RegisterMedic form = RegisterMedic.createFromBody(request.body());
 
