@@ -23,4 +23,6 @@ public class MedicalHistory {
 
     @Column(name = "OBSERVACIONES")
     private String observaciones;
+
+    
     }
