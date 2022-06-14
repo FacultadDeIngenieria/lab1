@@ -89,7 +89,7 @@ private HCSystem system;
         post(LoginP_Route, (request, response) -> {
             final LoginPatientRequest form = LoginPatientRequest.createFromBody(request.body());
             if (system.checkLoginPatient(form).isPresent()) {
-                response.redirect("/home_patient");
+                response.redirect("/sesion_paciente");
                 return halt();
             }else{
                 final Map<String,Object> model = Map.of("message", "Not a registered Patient, Please try again");
@@ -112,6 +112,15 @@ private HCSystem system;
             response.redirect("/home.html");
         return halt();});
 
+        get("/sesion_medico", (request, response) -> {
+            response.redirect("/SesionMedico.html");
+        return halt();
+        });
+
+        get("/sesion_paciente", (request, response) -> {
+            response.redirect("/SesionPaciente.html");
+            return halt();
+        });
 
         }
 
