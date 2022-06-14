@@ -29,6 +29,8 @@ public static final String Home_Route = "/home";
 public static final String Logout_route = "/logout";
 public static final String Patients_List ="/list_patients";
 
+public static final String Secret_Key="";
+
 private HCSystem system;
 
     public void create(HCSystem system){
