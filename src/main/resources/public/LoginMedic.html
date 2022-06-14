@@ -2,96 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registro Médico</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Login Médico</title>
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/stylesLM.css" rel="stylesheet">
+    <!-- Fonts CSS-->
+    <link rel="stylesheet" href="css/headingSM.css">
+    <link rel="stylesheet" href="css/bodySM.css">
+
 </head>
+
 <body>
-
-<link href="css/stylesSM.css" rel="stylesheet">
-
-
 <div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5">
+                <div class="card-body p-4 p-sm-5">
+                    <h5 class="card-title text-center mb-5 fw-light fs-5">Sign In</h5>
+                    <form action="http://localhost:4321/login_patient" method="post">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="dni" placeholder="dni">
+                            <label for="dni">DNI</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
 
-    <div class="card bg-light">
-        <article class="card-body mx-auto" style="max-width: 400px;">
-            <h4 class="card-title mt-3 text-center">Iniciar sesión como médico</h4>
-
-            <form action="http://localhost:4321/register_medic" method="post">
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                    </div>
-                    <input id= "name" name="name" class="form-control" placeholder="Nombre" type="text">
-                </div> <!-- form-group// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                    </div>
-                    <input id="lastname" name="lastname" class="form-control" placeholder="Apellido" type="text">
-                </div> <!-- form-group// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-address-card"></i> </span>
-                    </div>
-                    <input id= "matricula" name="matricula" class="form-control" placeholder="Número de matrícula" type="number">
-                </div> <!-- form-group// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                    </div>
-                    <select class="custom-select" style="max-width: 120px;">
-                        <option selected="">+54</option>
-                        <option value="1">+972</option>
-                        <option value="2">+198</option>
-                        <option value="3">+701</option>
-                    </select>
-                    <input id= "contact" name="contact" class="form-control" placeholder="Número de teléfono" type="number">
-                </div> <!-- form-group// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-stethoscope"></i> </span>
-                    </div>
-                    <select name="especialidad" type="text" class="form-control">
-                        <option selected=""> Especialidad</option>
-                        <option>Médico clínico</option>
-                        <option>Traumatología</option>
-                        <option>Dermatología</option>
-                        <option>Cardiología</option>
-                        <option>Cirugía</option>
-                        <option>Gastronterología</option>
-                        <option>Gineoclogía</option>
-                        <option>Hematología</option>
-                        <option>Infectología</option>
-                        <option>Nutrición</option>
-                        <option>Neumonología</option>
-                        <option>Oftalmología</option>
-                        <option>Oncología</option>
-                        <option>Pediatría</option>
-                        <option>Psicología</option>
-                        <option>Psiquiatría</option>
-                        <option>Oftalmología</option>
-                        <option>Toxicología</option>
-                        <option>Urología</option>
-                    </select>
-                </div> <!-- form-group end.// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                    </div>
-                    <input name="password" class="form-control" placeholder="Crear contraseña" type="password" >
-                </div> <!-- form-group// -->
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Registrar  </button>
-                </div> <!-- form-group// -->
-                <p class="text-center">Ya estás registrado? <a href="">Iniciar sesión</a> </p>
-            </form>
-        </article>
-    </div> <!-- card.// -->
-
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                            <label class="form-check-label" for="rememberPasswordCheck">
+                                Remember password
+                            </label>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign
+                                in</button>
+                        </div>
+                        <hr class="my-4">
+                        <div class="d-grid mb-2">
+                            <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit">
+                                <i class="fab fa-google me-2"></i> Sign in with Google
+                            </button>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-facebook btn-login text-uppercase fw-bold" type="submit">
+                                <i class="fab fa-facebook-f me-2"></i> Sign in with Facebook
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<!--container end.//-->
-
-
 </body>
-</html>
