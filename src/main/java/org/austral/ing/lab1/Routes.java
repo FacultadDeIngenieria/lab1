@@ -49,7 +49,8 @@ private HCSystem system;
             return "ok";
         });
 
-        get(RegisterPatient_Route, (request, response) -> render(Register_Template_Patient));
+        get(RegisterPatient_Route, (request, response) -> {response.redirect("registerPatient.html");
+        return halt();});
         post(RegisterPatient_Route, (request, response) -> {
             final RegisterPatient form = RegisterPatient.createFromBody(request.body());
 
@@ -60,7 +61,8 @@ private HCSystem system;
                 return halt();
             } else {
                 final Map<String,Object> model = Map.of("message", "Patient already exists");
-                return render(model, Register_Template_Patient);
+                response.redirect(RegisterPatient_Route);
+                return halt();
             }
         });
         get(RegisterMedic_Route, (request, response) -> {
@@ -97,11 +99,12 @@ private HCSystem system;
                 return halt();
                 }
         });
-        get(LoginM_Route, (request, response) -> render(LoginM_Template));
+        get(LoginM_Route, (request, response) -> {response.redirect("LoginMedic.html");
+        return halt();});
         post(LoginM_Route, (request, response) -> {
             final LoginMedicRequest form = LoginMedicRequest.createFromBody(request.body());
             if (system.checkLoginMedic(form).isPresent()) {
-                response.redirect(Home_Route);
+                response.redirect("/sesion_medico");
                 return halt();
             }else{
                 final Map<String,Object> model = Map.of("message", "Not a registered Medic, Please try again");
