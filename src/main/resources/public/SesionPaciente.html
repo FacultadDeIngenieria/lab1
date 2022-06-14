@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Sesion Médico</title>
+        <title>Sesion Paciente</title>
         <!-- Font Awesome icons (free version)-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -32,18 +32,17 @@
         </nav>
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
-                <!-- Masthead Avatar Image--><img src="images/MedicosCirculo.jpeg" alt="" width="300" height="300">
+                <!-- Masthead Avatar Image--><img src="images/PacientesCirculo.jpeg" alt="" width="300" height="300">
                 <!-- Masthead Heading-->
-                <h1 class="masthead-heading mb-0">Sesión Médico</h1>
+                <h1 class="masthead-heading mb-0">Sesión Paciente</h1>
                 <!-- Icon Divider-->
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-user-md"></i></div>
+                    <div class="divider-custom-icon"><i class="fas fa-id-card-alt"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Masthead Subheading-->
-                     <p class="pre-wrap masthead-subheading font-weight-light mb-0">Bienvenido a MiHistoriaClinica</p>
-                    </div>
+                     <p class="pre-wrap masthead-subheading font-weight-light mb-0">Bienvenido a MiHistoriaClinica</p>                    </div>
         </header>
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
@@ -54,12 +53,22 @@
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-user-md"></i></div>
+                    <div class="divider-custom-icon"><i class="fas fa-id-card-alt"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Portfolio Grid Items-->
                 <div class="row justify-content-center">
                     <!-- Portfolio Items-->
+
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal4">
+                          <div class="text-center"> <h4>Mi Historia Clínica</h4> </div>
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div><img class="img-fluid" src="images/LogoMiHistoriaCLinica.jpeg" alt="Mi Historia Clínica"/>
+                        </div>
+                    </div>
+
                     <div class="col-md-6 col-lg-4 mb-5">
                         <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal0">
                           <div class="text-center"> <h4>Link médico-paciente</h4> </div>
@@ -68,15 +77,35 @@
                             </div><img class="img-fluid" src="images/LinkPacienteMedico.jpeg" alt="Link médico-paciente"/>
                         </div>
                     </div>
+
                     <div class="col-md-6 col-lg-4 mb-5">
                         <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
-                          <div class="text-center"> <h4>Mis pacientes</h4> </div>
+                          <div class="text-center"> <h4>Mis médicos</h4> </div>
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                            </div><img class="img-fluid" src="images/Pacientes.jpeg" alt="Lista de pacientes"/>
+                            </div><img class="img-fluid" src="images/Medicos.jpeg" alt="Listado de médicos"/>
                         </div>
                     </div>
+
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2">
+                          <div class="text-center"> <h4>Mis estudios</h4> </div>
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div><img class="img-fluid" src="images/Estudios.jpeg" alt="Listado de studios"/>
+                        </div>
+                    </div>
+
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal3">
+                      <div class="text-center"> <h4>Mis medicamentos</h4> </div>
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                        </div><img class="img-fluid" src="images/Medicamentos.jpeg" alt="Listado de medicamentos"/>
+                    </div>
                 </div>
+
+            </div>
             </div>
         </section>
         <!-- Portfolio Modal-->
@@ -93,12 +122,12 @@
                                     <!-- Icon Divider-->
                                     <div class="divider-custom">
                                         <div class="divider-custom-line"></div>
-                                        <div class="divider-custom-icon"><i class="fas fa-user-md"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-id-card-alt"></i></div>
                                         <div class="divider-custom-line"></div>
                                     </div>
                                     <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="images/LinkPacienteMedico.jpeg" alt="Link médico-paciente"/>
                                     <!-- Portfolio Modal - Text-->
-                                    <p class="mb-5">Abrimos cámara del médico para escanear qr o hacemos que adjunte foto del qr</p>
+                                    <p class="mb-5">Creamos QR para que el médico lo escanee y linkearlos</p>
                                     <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
                                 </div>
                             </div>
@@ -107,6 +136,7 @@
                 </div>
             </div>
         </div>
+
         <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-labelledby="#portfolioModal1Label" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
@@ -116,16 +146,101 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary mb-0">Lista de pacientes</h2>
+                                    <h2 class="portfolio-modal-title text-secondary mb-0">Listado de médicos</h2>
                                     <!-- Icon Divider-->
                                     <div class="divider-custom">
                                         <div class="divider-custom-line"></div>
-                                        <div class="divider-custom-icon"><i class="fas fa-user-md"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-id-card-alt"></i></div>
                                         <div class="divider-custom-line"></div>
                                     </div>
-                                    <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="images/Pacientes.jpeg" alt="Lista de pacientes"/>
+                                    <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="images/Medicos.jpeg" alt="Listado de médicos"/>
                                     <!-- Portfolio Modal - Text-->
-                                    <p class="mb-5">Mostramos listado con los pacientes linkeados.</p>
+                                    <p class="mb-5">Mostramos listado con los médicos linkeados.</p>
+                                    <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Modal-->
+        <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-labelledby="#portfolioModal2Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary mb-0">Mis estudios</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-id-card-alt"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="images/Estudios.jpeg" alt="Mis estudios"/>
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-5">Mostramos listado de estudios</p>
+                                    <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-labelledby="#portfolioModal3Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary mb-0">Listado de medicamentos</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-id-card-alt"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="images/Medicamentos.jpeg" alt="Listado de medicamentos"/>
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-5">Mostramos listado con los medicamentos del paciente.</p>
+                                    <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-labelledby="#portfolioModal4Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary mb-0">Mi Historia Clínica</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-id-card-alt"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="images/LogoMiHistoriaCLinica.jpeg" alt="Mi Historia Clínica"/>
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-5">Mostramos la historia clínica del paciente.</p>
                                     <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
                                 </div>
                             </div>
@@ -144,7 +259,7 @@
                 <!-- Icon Divider-->
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-user-md"></i></div>
+                    <div class="divider-custom-icon"><i class="fas fa-heartbeat"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- About Section Content-->
@@ -164,7 +279,7 @@
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-user-md"></i></div>
+                    <div class="divider-custom-icon"><i class="fas fa-heartbeat"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Contact Section Content-->
