@@ -79,7 +79,8 @@ private HCSystem system;
                 return halt();
             }else{
                 final Map<String,Object> model = Map.of("message", "Medic already exists");
-                return render(model, Register_Template_Medic);
+                response.redirect("/registerMedic.html");
+                return halt();
             }
         });
 
@@ -91,6 +92,7 @@ private HCSystem system;
         post(LoginP_Route, (request, response) -> {
             final LoginPatientRequest form = LoginPatientRequest.createFromBody(request.body());
             if (system.checkLoginPatient(form).isPresent()) {
+                authenticatePatient(form);
                 response.redirect("/sesion_paciente");
                 return halt();
             }else{
@@ -104,11 +106,13 @@ private HCSystem system;
         post(LoginM_Route, (request, response) -> {
             final LoginMedicRequest form = LoginMedicRequest.createFromBody(request.body());
             if (system.checkLoginMedic(form).isPresent()) {
+                authenticateMedic(form);
                 response.redirect("/sesion_medico");
                 return halt();
             }else{
                 final Map<String,Object> model = Map.of("message", "Not a registered Medic, Please try again");
-                return render(model, LoginM_Template);
+                response.redirect("/LoginMedic.html");
+                return halt();
             }
         });
         get(Home_Route, (request, response) -> {
@@ -125,13 +129,22 @@ private HCSystem system;
             return halt();
         });
 
+        get("/medics_list", (request, response) -> {response.redirect("listaPacientes.html");
+            Patient patient =(getAuthenticatedPatient(request));
+                return patient.getMedics();
+            });
+
         }
 
         private final Cache<Token, Integer> dniByToken = CacheBuilder.newBuilder()
                 .expireAfterAccess(30, MINUTES)
                 .build();
 
-        private Optional<Token> authenticate(LoginPatientRequest req) {
+    private final Cache<Token, Long> matriculaByToken = CacheBuilder.newBuilder()
+            .expireAfterAccess(30, MINUTES)
+            .build();
+
+        private Optional<Token> authenticatePatient(LoginPatientRequest req) {
             return system.findByDni(req.getDni()).flatMap(foundUser -> {
                 if (system.validPassword(req.getPassword(), foundUser)) {
                     final Token token = system.createToken();
@@ -142,6 +155,17 @@ private HCSystem system;
                 }
             });
     }
+    private Optional<Token> authenticateMedic(LoginMedicRequest req) {
+        return system.findByMatricula(req.getMatricula()).flatMap(foundUser -> {
+            if (system.validPassword(req.getPassword(), foundUser)) {
+                final Token token = system.createToken();
+                matriculaByToken.put(token, foundUser.getMatricula());
+                return Optional.of(token);
+            } else {
+                return Optional.empty();
+            }
+        });
+    }
     //Crear un meteodo de validacion despues de recibir un form del medico
     private Object render(Map<String, Object> model, String template){
             return new FreeMarkerEngine().render(new ModelAndView(model,template));
@@ -150,9 +174,13 @@ private HCSystem system;
             return new FreeMarkerEngine().render(new ModelAndView(Collections.emptyMap(), template));
     }
 
-    private Optional<Patient> getAuthenticatedPatient(Request request) {
+    private Patient getAuthenticatedPatient(Request request) {
         final int dni = request.session().attribute("patient");
-        return Optional.of(dni).flatMap(system::findByDni);
+        return Optional.of(dni).flatMap(system::findByDni).get();
+    }
+    private Medic getAuthenticatedMedic(Request request) {
+        final int matricula = request.session().attribute("medic");
+        return Optional.of(matricula).flatMap(system::findByMatricula).get();
     }
 
 

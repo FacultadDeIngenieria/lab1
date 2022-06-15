@@ -7,7 +7,6 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import org.austral.ing.lab1.model.*;
 import org.austral.ing.lab1.persistence.Medics;
 import org.austral.ing.lab1.persistence.Patients;
-import org.hsqldb.persist.Cache;
 
 
 import javax.persistence.EntityManager;
@@ -16,8 +15,6 @@ import javax.persistence.Persistence;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -79,6 +76,12 @@ public class HCSystem {
                 ds -> ds.patients().findByDni(dni)
         );
     }
+    //Encuentra Medico por matricula
+    public Optional<Medic> findByMatricula(long matricula) {
+        return runInTransaction(
+                ds -> ds.medics().findByMatricula(matricula)
+        );
+    }
 
     //Crea Token 6 digitos
     public Token createToken(){
@@ -88,6 +91,14 @@ public class HCSystem {
              token += String.valueOf(number);
         }
         return Token.create(Integer.parseInt(token));
+    }
+    public String createNumber(){
+        String token= "";
+        for(int i = 1; i<=6; i++){
+            int number = (int)(Math.random()*9 + 1);
+            token += String.valueOf(number);
+        }
+        return token;
     }
 
     //Crea Qr con un token adentro
@@ -112,7 +123,9 @@ public class HCSystem {
                 ds -> ds.patients().findByMHN(mhn)
         );
     }
-
+    public String listPatients(Medic medic, int i) {
+        return medic.getPatients().get(i).getName();
+    }
 
     private <E> E runInTransaction(Function<HCSystemRepository, E> closure){
         final EntityManager entityManager = factory.createEntityManager();
@@ -139,6 +152,7 @@ public class HCSystem {
         // Super dummy implementation. Zero security
         return foundUser.getPassword().equals(password);
     }
+
 
 
 }
