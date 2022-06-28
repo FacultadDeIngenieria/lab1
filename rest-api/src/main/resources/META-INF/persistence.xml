@@ -9,6 +9,8 @@
         </description>
 
         <class>lab1.rest.model.User</class>
+        <class>lab1.rest.model.Rank</class>
+        <class>lab1.rest.model.Game</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver" />
