@@ -1,11 +1,10 @@
 package org.austral.ing.lab1;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.gson.Gson;
 import org.austral.ing.lab1.model.*;
 import org.austral.ing.lab1.model.LoginPatientRequest;
-import spark.ModelAndView;
 import spark.Request;
-import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.*;
 
@@ -15,11 +14,6 @@ import static spark.Spark.*;
 
 public class Routes {
 
-public static final String Register_Template_Patient = "RegisterPatient.ftl";
-public static final String Register_Template_Medic = "RegisterMedic.ftl";
-public static final String LoginP_Template = "LoginPatient.ftl";
-public static final String LoginM_Template = "LoginMedic.ftl";
-private static final String HomeM_Template = "StartingHomePage.ftl";
 
 public static final String LoginP_Route = "/login_patient";
 public static final String LoginM_Route = "/login_medic";
@@ -29,7 +23,6 @@ public static final String Home_Route = "/home";
 public static final String Logout_route = "/logout";
 public static final String Patients_List ="/list_patients";
 
-public static final String Secret_Key="";
 
 private HCSystem system;
 
@@ -115,6 +108,12 @@ private HCSystem system;
                 return halt();
             }
         });
+
+        get(Logout_route,(request, response) -> {logout(request);
+        response.redirect(Home_Route);
+        return halt();});
+
+
         get(Home_Route, (request, response) -> {
             response.redirect("/home.html");
         return halt();});
@@ -129,12 +128,19 @@ private HCSystem system;
             return halt();
         });
 
-        get("/medics_list", (request, response) -> {response.redirect("listaPacientes.html");
+        get("/medics_list", (request, response) -> {
             Patient patient =(getAuthenticatedPatient(request));
-                return patient.getMedics();
+            response.type("application/json");
+            return new Gson().toJson(patient.getMedics());
             });
 
-        }
+        get(Patients_List, (request, response) -> {
+            Medic medic =(getAuthenticatedMedic(request));
+            response.type("application/json");
+            return new Gson().toJson(medic.getPatients());
+        });
+
+    }
 
         private final Cache<Token, Integer> dniByToken = CacheBuilder.newBuilder()
                 .expireAfterAccess(30, MINUTES)
@@ -155,6 +161,7 @@ private HCSystem system;
                 }
             });
     }
+    //Crear un meteodo de validacion despues de recibir un form del medico
     private Optional<Token> authenticateMedic(LoginMedicRequest req) {
         return system.findByMatricula(req.getMatricula()).flatMap(foundUser -> {
             if (system.validPassword(req.getPassword(), foundUser)) {
@@ -166,13 +173,6 @@ private HCSystem system;
             }
         });
     }
-    //Crear un meteodo de validacion despues de recibir un form del medico
-    private Object render(Map<String, Object> model, String template){
-            return new FreeMarkerEngine().render(new ModelAndView(model,template));
-    }
-    private Object render(String template){
-            return new FreeMarkerEngine().render(new ModelAndView(Collections.emptyMap(), template));
-    }
 
     private Patient getAuthenticatedPatient(Request request) {
         final int dni = request.session().attribute("patient");
@@ -181,6 +181,10 @@ private HCSystem system;
     private Medic getAuthenticatedMedic(Request request) {
         final int matricula = request.session().attribute("medic");
         return Optional.of(matricula).flatMap(system::findByMatricula).get();
+    }
+
+    private void logout(Request request){
+        request.session().removeAttribute("patient");
     }
 
 

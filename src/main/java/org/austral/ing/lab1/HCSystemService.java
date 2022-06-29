@@ -18,7 +18,7 @@ public class HCSystemService {
 
         private void startWebServer() {
             staticFiles.location("public");
-            port(4321);
+            port(432);
             final HCSystem system = HCSystem.create("lab1");
             routes.create(system);
         }

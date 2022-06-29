@@ -15,6 +15,7 @@ import javax.persistence.Persistence;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -108,6 +109,17 @@ public class HCSystem {
         return qrCodeWriter.encode(String.valueOf(token.getToken()), BarcodeFormat.QR_CODE,350,350);
     }
 
+    public List<Patient> listPatients() {
+        return runInTransaction(
+                ds -> ds.patients().list()
+        );
+    }
+    public List<Medic> listMedics() {
+        return runInTransaction(
+                ds -> ds.medics().list()
+        );
+    }
+
     //Transforma Qr en imagen
     public BufferedImage qrCodeDecoder(BitMatrix bitMatrix) {
         return MatrixToImageWriter.toBufferedImage(bitMatrix);
@@ -122,9 +134,6 @@ public class HCSystem {
         return runInTransaction(
                 ds -> ds.patients().findByMHN(mhn)
         );
-    }
-    public String listPatients(Medic medic, int i) {
-        return medic.getPatients().get(i).getName();
     }
 
     private <E> E runInTransaction(Function<HCSystemRepository, E> closure){
