@@ -111,8 +111,9 @@ public class Routes {
         get("/file/:name", (request, response) -> {
             final String name = request.params("name");
 
-            response.type("application/png");
-            response.status(200);
+            // Deberian guardar el content type y aca especificarlo
+            response.type("image/png");
+
             return FilesRepository.load(name);
         });
         authorizedDelete(AUTH_ROUTE, (req, res) -> {
