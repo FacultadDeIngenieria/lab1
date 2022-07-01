@@ -7,10 +7,14 @@ import lab1.rest.model.Auth;
 import lab1.rest.model.AuthRequest;
 import lab1.rest.model.RegistrationUserForm;
 import lab1.rest.model.User;
+import lab1.rest.persistence.FilesRepository;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -76,6 +80,41 @@ public class Routes {
             return res.body();
         });
 
+        get("/fileUpload", (req, res) ->
+                "<form method='post' action='/fileUpload' enctype='multipart/form-data'>"
+                        + "    <input type='file' name='uploaded_file'>"
+                        + "    <button>Upload picture</button>"
+                        + "</form>"
+        );
+
+        post("/fileUpload", (request, response) -> {
+            request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+
+            final Part uploadedFile = request.raw().getPart("uploaded_file");
+            final String uploadedFileName = uploadedFile.getSubmittedFileName();
+
+            try (InputStream is = uploadedFile.getInputStream()) {
+                FilesRepository.store(uploadedFileName, is);
+            }
+
+            response.redirect("/show-file/" + uploadedFileName);
+            return "File uploaded";
+        });
+
+        get("/show-file/:name", (request, response) -> {
+            final String name = request.params("name");
+
+            return "<a href='/file/" + name + "'>Download Img</a>" +
+                    "<img src='/file/" + name + "'>";
+        });
+
+        get("/file/:name", (request, response) -> {
+            final String name = request.params("name");
+
+            response.type("application/png");
+            response.status(200);
+            return FilesRepository.load(name);
+        });
         authorizedDelete(AUTH_ROUTE, (req, res) -> {
             getToken(req)
                     .ifPresentOrElse(token -> {
