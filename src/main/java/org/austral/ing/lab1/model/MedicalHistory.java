@@ -12,7 +12,7 @@ public class MedicalHistory {
     @Id
     private Long medicalHistoryNumber;
 
-    @Column(name = "ENFERMEDADES")
+    @Column(name = "ENFERMEDADES_PASADAS")
     private String enfermedades;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -40,23 +40,27 @@ public class MedicalHistory {
     private String physicalExam;
 
     @Column(name = "DATOS_POSITIVOS_Y_NEGATIVOS")
-    private String upAndDowns;
+    private String upsAndDowns;
 
     @Column(name = "OBSERVACIONES_2")
     private String observations2;
 
-    public MedicalHistory(Long medicalHistoryNumber, String enfermedades, String antecedentes,
-                          String observations1, String consult, String disease, String physicalExam, String upAndDowns, String observations2) {
-        this.medicalHistoryNumber = medicalHistoryNumber;
+    public MedicalHistory(Patient patient, String enfermedades, String antecedentes,
+                          String observations1, String consult, String disease, String physicalExam, String upsAndDowns, String observations2) {
+        this.patient = patient;
         this.enfermedades = enfermedades;
         this.antecedentes = antecedentes;
         this.observations1 = observations1;
         this.consult = consult;
         this.disease = disease;
         this.physicalExam = physicalExam;
-        this.upAndDowns = upAndDowns;
+        this.upsAndDowns = upsAndDowns;
         this.observations2 = observations2;
 
+    }
+
+    public static MedicalHistory create(Patient patient, String enfermedades, String antecedentes, String observations1, String consult, String disease, String physicalExam, String upsAndDowns, String observations2) {
+        return new MedicalHistory(patient,enfermedades,antecedentes,observations1,consult,disease,physicalExam,upsAndDowns,observations2);
     }
 
     public Long getMedicalHistoryNumber() {
@@ -116,12 +120,12 @@ public class MedicalHistory {
         this.physicalExam = physicalExam;
     }
 
-    public String getUpAndDowns() {
-        return upAndDowns;
+    public String getUpsAndDowns() {
+        return upsAndDowns;
     }
 
-    public void setUpAndDowns(String upAndDowns) {
-        this.upAndDowns = upAndDowns;
+    public void setUpsAndDowns(String upAndDowns) {
+        this.upsAndDowns = upAndDowns;
     }
 
     public String getObservations2() {

@@ -5,6 +5,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.austral.ing.lab1.model.*;
+import org.austral.ing.lab1.persistence.MedicalHistories;
 import org.austral.ing.lab1.persistence.Medics;
 import org.austral.ing.lab1.persistence.Patients;
 
@@ -35,10 +36,14 @@ public class HCSystem {
     public Optional<Patient> registerPatient(RegisterPatient form) {
         return runInTransaction(datasource -> {
             final Patients patients = datasource.patients();
+            final MedicalHistories medicalHistories = datasource.medicalHistories();
             if (patients.exists(form.getDni())){
                 return Optional.empty();
         }else {
-                return Optional.of(patients.createPatient(form));
+               Optional<Patient> newPatient = Optional.of(patients.createPatient(form));
+               MedicalHistoryManager.createFromZero(newPatient);
+               medicalHistories.createMedicalHistory(MedicalHistoryManager.createFromZero(newPatient));
+                return newPatient;
             }
         });
     }
