@@ -1,7 +1,7 @@
 package org.austral.ing.lab1;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.gson.Gson;
+import org.austral.ing.lab1.json.JsonParser;
 import org.austral.ing.lab1.model.*;
 import org.austral.ing.lab1.model.LoginPatientRequest;
 import spark.Request;
@@ -28,6 +28,7 @@ private HCSystem system;
 
     public void create(HCSystem system){
     this.system = system;
+        JsonParser jsonParser = new JsonParser();
     routes();
 }
     private void routes(){
@@ -131,13 +132,13 @@ private HCSystem system;
         get("/medics_list", (request, response) -> {
             Patient patient =(getAuthenticatedPatient(request));
             response.type("application/json");
-            return new Gson().toJson(patient.getMedics());
+            return JsonParser.toJson(patient.getMedics());
             });
 
         get(Patients_List, (request, response) -> {
             Medic medic =(getAuthenticatedMedic(request));
             response.type("application/json");
-            return new Gson().toJson(medic.getPatients());
+            return JsonParser.toJson(medic.getPatients());
         });
 
     }
