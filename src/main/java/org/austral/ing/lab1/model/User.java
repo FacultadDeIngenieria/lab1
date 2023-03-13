@@ -1,36 +1,37 @@
 package org.austral.ing.lab1.model;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(generator = "userGen", strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "FIRST_NAME")
+    @Column()
     private String firstName;
 
-    @Column(name = "LAST_NAME")
+    @Column()
     private String lastName;
 
-    @Column(name = "EMAIL", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "PASSWORD")
-    private String password;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private final List<Publication> publications = new ArrayList<>();
 
-    public User() { }
+    @ManyToMany(mappedBy = "liked")
+    private final List<Publication> likes = new ArrayList<>();
 
-    public static UserBuilder create(String email) {
-        return new UserBuilder(email);
+    public User() {}
+
+    public User(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -65,52 +66,23 @@ public class User {
         this.id = id;
     }
 
-
-    public void setPassword(String password) {
-        this.password = password;
+    public List<Publication> getPublications() {
+        return publications;
     }
 
-    public String getPassword() {
-        return password;
+    public String getDisplayName() {
+        return getFirstName() + " " + getLastName();
     }
 
-    private User(UserBuilder builder) {
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.password = builder.password;
-        this.email = builder.email;
+    public void likes(Publication publication) {
+        likes.add(publication);
+        publication.isLikedBy(this);
     }
 
-    public static class UserBuilder {
-        private final String email;
-        private String firstName;
-        private String lastName;
-        private String password;
 
-        public UserBuilder(String email) {
-            this.email = email;
-        }
-
-        public UserBuilder password(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public UserBuilder firstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public UserBuilder lastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-
-        public User build() {
-            return new User(this);
-        }
-
+    public void addPublication(Publication publication) {
+        publication.isPublishedBy(this);
+        publications.add(publication);
     }
 
 }
