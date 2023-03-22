@@ -1,5 +1,6 @@
 package org.austral.ing.lab1.model;
 
+import com.google.gson.Gson;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -79,6 +80,16 @@ public class User {
         this.lastName = builder.lastName;
         this.password = builder.password;
         this.email = builder.email;
+    }
+
+    public static User fromJson(String json) {
+        final Gson gson = new Gson();
+        return gson.fromJson(json, User.class);
+    }
+
+    public String asJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
     public static class UserBuilder {

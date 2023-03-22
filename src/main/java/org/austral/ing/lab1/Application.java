@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Application {
+
+    private static final Gson gson = new Gson();
     public static void main(String[] args) {
 
         final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("lab1");
@@ -52,50 +54,38 @@ public class Application {
                 }
         );
 
-        /* 3. Dynamic Content v2: Get Current Date & Time using template */
-        Spark.get("/web/v2",
-                (req, resp) -> {
-                    final String now = Instant.now().toString();
-
-                    final Map<String, Object> model = new HashMap<>();
-                    model.put("time", now);
-                    return new FreeMarkerEngine().render(new ModelAndView(model, "now.ftl"));
-                }
-        );
-
-        /* 4. Dynamic Content: Show User Details */
+        /* 3. Dynamic Content: Show User Details - Url params */
         Spark.get("/users/:name",
                 (req, resp) -> {
                     final String name = capitalized(req.params("name"));
 
                     final User user = User.create(name + "@gmail.com").firstName(name).lastName("Skywalker").build();
 
-                    final Map<String, Object> model = new HashMap<>();
-                    model.put("user", user);
-                        return new FreeMarkerEngine().render(new ModelAndView(model, "user.ftl"));
+                    resp.type("application/json");
+
+                    return user.asJson();
                 }
         );
 
-        /* 5. Dynamic Content using query params */
+        /* 4. Dynamic Content: Show User Details - Query params */
         Spark.get("/users",
                 (req, resp) -> {
                     final String name = capitalized(req.queryParams("name"));
 
-                    final Map<String, Object> model = new HashMap<>();
-                    if (!Strings.isNullOrEmpty(name)) {
-                        final User user = User.create(name + "@gmail.com").firstName(name).lastName("Skywalker").build();
-                        model.put("user", user);
-                    }
+                    final User user = User.create(name + "@gmail.com").firstName(name).lastName("Skywalker").build();
 
-                    return new FreeMarkerEngine().render(new ModelAndView(model, "user.ftl"));
+                    resp.type("application/json");
+
+                    return user.asJson();
                 }
         );
 
-        /* 6. Dynamic Content from Db */
+        /* 5. Dynamic Content from Db */
         Spark.get("/persisted-users/:id",
                 (req, resp) -> {
                     final String id = req.params("id");
 
+                    /* Business Logic */
                     final EntityManager entityManager = entityManagerFactory.createEntityManager();
                     final EntityTransaction tx = entityManager.getTransaction();
                     tx.begin();
@@ -103,19 +93,16 @@ public class Application {
                     tx.commit();
                     entityManager.close();
 
-                    final Map<String, Object> model = new HashMap<>();
-
-                    model.put("user", user);
-                    return new FreeMarkerEngine().render(new ModelAndView(model, "user.ftl"));
+                    resp.type("application/json");
+                    return user.asJson();
                 }
         );
 
-        /* 7. Receiving data from client */
+        /* 6. Receiving data from client */
         Spark.post("/users", "application/json", (req, resp) -> {
-            final Gson gson = new Gson();
+            final User user = User.fromJson(req.body());
 
-            final User user = gson.fromJson(req.body(), User.class);
-
+            /* Begin Business Logic */
             final EntityManager entityManager = entityManagerFactory.createEntityManager();
             final Users users = new Users(entityManager);
             EntityTransaction tx = entityManager.getTransaction();
@@ -125,16 +112,15 @@ public class Application {
             resp.status(201);
             tx.commit();
             entityManager.close();
+            /* End Business Logic */
 
-            return gson.toJson(user);
+            return user.asJson();
         });
 
         Spark.get("/users1", "application/json", (req, resp) -> {
 
             resp.type("application/json");
             resp.status(201);
-
-            final Gson gson = new Gson();
 
             User u1 = User.create("ja1").lastName("pee").build();
             User u2 = User.create("ja2").lastName("pee").build();
