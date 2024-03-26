@@ -4,9 +4,7 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.austral.ing.lab1.model.User;
 import org.austral.ing.lab1.repository.Users;
-import spark.ModelAndView;
 import spark.Spark;
-import spark.template.freemarker.FreeMarkerEngine;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,9 +12,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Application {
 
@@ -127,6 +123,26 @@ public class Application {
 
             List<User> users = Arrays.asList(u1, u2);
             return gson.toJson(users);
+        });
+
+        Spark.options("/*", (req, res) -> {
+            String accessControlRequestHeaders = req.headers("Access-Control-Request-Headers");
+            if (accessControlRequestHeaders != null) {
+                res.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+            }
+
+            String accessControlRequestMethod = req.headers("Access-Control-Request-Method");
+            if (accessControlRequestMethod != null) {
+                res.header("Access-Control-Allow-Methods", accessControlRequestMethod);
+            }
+
+            return "OK";
+        });
+
+        Spark.before((req, res) -> {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "*");
+            res.type("application/json");
         });
     }
 
